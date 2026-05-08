@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小学生竖式计算器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>🧮 竖式计算器</h1>
+            <p class="subtitle">看清每一步计算过程</p>
+        </header>
+
+        <div class="main-layout">
+            <div class="left-column">
+                <div class="calculator-section">
+                    <div class="display-screen">
+                        <div class="previous-operand" id="previousOperand"></div>
+                        <div class="current-operand" id="currentOperand">0</div>
+                    </div>
+
+                    <div class="operation-selector">
+                        <button class="op-btn" data-op="+" title="加法">＋</button>
+                        <button class="op-btn" data-op="-" title="减法">－</button>
+                        <button class="op-btn" data-op="×" title="乘法">×</button>
+                        <button class="op-btn" data-op="÷" title="除法">÷</button>
+                    </div>
+
+                    <div class="keypad">
+                        <button class="key" data-action="clear">C</button>
+                        <button class="key" data-action="backspace">←</button>
+                        
+                        <button class="key num" data-number="7">7</button>
+                        <button class="key num" data-number="8">8</button>
+                        <button class="key num" data-number="9">9</button>
+                        
+                        <button class="key num" data-number="4">4</button>
+                        <button class="key num" data-number="5">5</button>
+                        <button class="key num" data-number="6">6</button>
+                        
+                        <button class="key num" data-number="1">1</button>
+                        <button class="key num" data-number="2">2</button>
+                        <button class="key num" data-number="3">3</button>
+                        
+                        <button class="key num zero" data-number="0">0</button>
+                        <button class="key num" data-number=".">.</button>
+                        <button class="key" data-action="animate">▶ 开始计算</button>
+                    </div>
+                </div>
+
+                <div class="vertical-section" id="verticalSection">
+                    <div class="vertical-header">
+                        <h2>📐 竖式计算过程</h2>
+                        <div class="speed-control">
+                            <label>动画速度：</label>
+                            <input type="range" id="speedRange" min="1" max="5" value="3">
+                            <span id="speedLabel">中</span>
+                        </div>
+                    </div>
+                    <div class="vertical-workspace" id="verticalWorkspace">
+                        <div class="placeholder">输入数字并选择运算后，点击「开始计算」查看竖式</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="history-panel">
+                <div class="history-header">
+                    <h2>📜 历史记录</h2>
+                    <button class="hist-undo" id="histUndo" disabled>↩ 撤回</button>
+                </div>
+                <div class="history-list" id="historyList">
+                    <div class="history-empty">暂无记录</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
