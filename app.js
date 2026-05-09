@@ -715,8 +715,9 @@ class VerticalCalculator {
                 remainder = r;
             }
 
+            // 整除立即停止
+            if (remainder === 0) break;
             if (i >= decimalPos) {
-                if (remainder === 0) break; // 整除立即停止
                 if (repeatingStart < 0 && seen.has(remainder)) {
                     repeatingStart = seen.get(remainder);
                 }
@@ -781,9 +782,28 @@ class VerticalCalculator {
         }
 
         const divisorStr = String(divisor);
-        const dividendDisplay = intStr + (decStr ? '.' + decStr : '');
         const CHAR_WIDTH = 2; // em，每个字符固定宽度
         const getCol = (digitIdx) => digitIdx < decimalPos ? digitIdx : digitIdx + 1;
+
+        // 计算最大列数，确保被除数显示覆盖整个计算过程
+        const maxStepI = steps.length - 1;
+        const maxCol = getCol(maxStepI);
+
+        // 构建被除数显示（扩展到足够宽度，包含补充的0）
+        let dividendChars = [];
+        for (let c = 0; c <= maxCol; c++) {
+            if (c === decimalPos) {
+                dividendChars.push('.');
+            } else {
+                const digitIdx = c < decimalPos ? c : c - 1;
+                if (digitIdx < allDigits.length) {
+                    dividendChars.push(String(allDigits[digitIdx]));
+                } else {
+                    dividendChars.push('0');
+                }
+            }
+        }
+        const dividendDisplay = dividendChars.join('');
 
         // 辅助：把字符串拆成固定宽度的字符 span
         const digitSpans = (text) => {
@@ -800,9 +820,9 @@ class VerticalCalculator {
             dividendHtml += `<span class="vf-digit">${ch}</span>`;
         }
 
-        // 构建虚线（列之间）
+        // 构建虚线（列之间，覆盖整个计算宽度）
         let gridLinesHtml = '';
-        for (let c = 1; c < dividendDisplay.length; c++) {
+        for (let c = 1; c <= maxCol; c++) {
             gridLinesHtml += `<div class="vf-grid-line" style="left:${c * CHAR_WIDTH}em"></div>`;
         }
 
